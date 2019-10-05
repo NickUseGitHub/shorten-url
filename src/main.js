@@ -1,14 +1,18 @@
 import Koa from 'koa'
 import Router from 'koa-router'
-import helloString from './helloworldString'
 
 const app = new Koa()
 const port = 3000
 
 const router = new Router()
 
-router.get('/', ctx => {
-  ctx.body = helloString
+router.get('/shorturl', ctx => {
+  ctx.set('Content-Type: application/json')
+  ctx.body = JSON.stringify({
+    data: {
+      shortUrl: 'shorturl',
+    },
+  })
 })
 
 app.use(router.routes()).use(router.allowedMethods())
