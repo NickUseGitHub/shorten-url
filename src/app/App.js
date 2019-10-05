@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
+import UrlResult from './UrlResult'
 
 export default function App() {
   const [urlForShorten, setUrlForShorten] = useState('')
+  const [urlResult, setUrlResult] = useState('')
 
   function handleOnChange(event) {
     event.preventDefault()
@@ -18,7 +20,7 @@ export default function App() {
 
   return (
     <div>
-      <div className="output"></div>
+      <UrlResult urlResult={urlResult} />
       <form onSubmit={handleOnSubmit}>
         <input type="text" value={urlForShorten} onChange={handleOnChange} />
       </form>
