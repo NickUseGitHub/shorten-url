@@ -18,6 +18,7 @@ async function getShortentUrl(url) {
 
 function BoxInput({ className, setUrlResult }) {
   const [urlForShorten, setUrlForShorten] = useState('')
+  const isDisableSubmit = !!urlForShorten === false
 
   function handleOnChange(event) {
     event.preventDefault()
@@ -49,6 +50,9 @@ function BoxInput({ className, setUrlResult }) {
         placeholder="e.g. www.yourwebsite.com"
         onChange={handleOnChange}
       />
+      <button type="submit" disabled={isDisableSubmit}>
+        Ok
+      </button>
     </form>
   )
 }
@@ -57,13 +61,17 @@ export default styled(BoxInput)`
   width: 90%;
   font-size: 1.5em;
 
-  span {
+  button {
+    height: 50px;
+    padding: 5px 10px;
+    font-size: 0.7em;
+    margin-left: 10px;
+    border: 2px solid transparent;
   }
 
   input {
     height: 50px;
     width: 60%;
-    padding: 5px;
 
     border: radius: 5%;
     border: 2px solid black;
