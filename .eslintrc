@@ -11,6 +11,6 @@
   "extends": ["eslint:recommended", "prettier"],
   "rules": {
     "prettier/prettier": "error",
-    "semi":"off",
+    "semi": "off"
   }
 }
