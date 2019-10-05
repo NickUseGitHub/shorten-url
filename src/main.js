@@ -29,7 +29,6 @@ router.get('/shorturl', validateQueryString, ctx => {
     return
   }
 
-  ctx.set('Content-Type', 'application/javascript')
   ctx.body = JSON.stringify({
     data: {
       shortUrl: `${urlForShorten} aloha`,
