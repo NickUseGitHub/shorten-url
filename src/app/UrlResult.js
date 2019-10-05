@@ -1,12 +1,21 @@
 import React from 'react'
+import styled from 'styled-components'
 
-export default function UrlResult({ urlResult }) {
+function UrlResult({ className, urlResult }) {
   if (!urlResult) return null
 
-  return [
-    <div key="output" className="output">
-      your shorten url: {urlResult}
-    </div>,
-    <br key="space" />,
-  ]
+  return <div className={className}>your shorten url: {urlResult}</div>
 }
+
+export default styled(UrlResult)`
+  width: 90%;
+  height: 100px;
+  background-color: #e9e7a5;
+  margin-bottom: 20px;
+  font-size: 2em;
+  border-radius: 35px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`

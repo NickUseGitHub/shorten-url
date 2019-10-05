@@ -19,7 +19,7 @@ export default styled(App)`
   background-color: #a9c8e7;
   width: 100%;
   height: 90vh;
-  border-radius: 7%;
+  border-radius: 35px;
 
   display: flex;
   flex-direction: column;
