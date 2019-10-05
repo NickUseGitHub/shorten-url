@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import styled from 'styled-components'
 import axios from 'axios'
 import UrlResult from './UrlResult'
 
@@ -16,7 +17,7 @@ async function getShortentUrl(url) {
   }
 }
 
-export default function App() {
+function App({ className }) {
   const [urlForShorten, setUrlForShorten] = useState('')
   const [urlResult, setUrlResult] = useState('')
 
@@ -42,7 +43,7 @@ export default function App() {
   }
 
   return (
-    <div>
+    <div className={className}>
       <UrlResult urlResult={urlResult} />
       <form onSubmit={handleOnSubmit}>
         <input type="text" value={urlForShorten} onChange={handleOnChange} />
@@ -50,3 +51,11 @@ export default function App() {
     </div>
   )
 }
+
+export default styled(App)`
+  background-color: #a9c8e7;
+  width: 100%;
+  height: 90vh;
+  border-radius: 7%;
+  display: flex;
+`
