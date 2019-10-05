@@ -4,11 +4,17 @@
   "description": "shorten your url",
   "main": "index.js",
   "scripts": {
-    "start": "node ./src"
+    "dev": "nodemon ./src"
   },
   "author": "Chaiwat Tungtongsoontorn <nickt.tnick@gmail.com>",
   "license": "ISC",
   "dependencies": {
     "koa": "^2.8.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.6.2",
+    "@babel/preset-env": "^7.6.2",
+    "@babel/register": "^7.6.2",
+    "nodemon": "^1.19.3"
   }
 }
