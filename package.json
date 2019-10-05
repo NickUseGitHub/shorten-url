@@ -1,0 +1,11 @@
+{
+  "name": "shorten-url",
+  "version": "1.0.0",
+  "description": "shorten your url",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Chaiwat Tungtongsoontorn <nickt.tnick@gmail.com>",
+  "license": "ISC"
+}
