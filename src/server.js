@@ -15,13 +15,10 @@ export default async function appHandler(ctx) {
     <head>
       <title>Universal App</title>
     </head>
-    <body>
-      <div id="root">
+    <body id="root">
         ${appBody}
-      </div>
-
-      <script type="text/javascript" src="${appBundleScriptUrl}"></script>
     </body>
+    <script type="text/javascript" src="${appBundleScriptUrl}"></script>
   </html>
   `
 }
