@@ -2,6 +2,7 @@ import Koa from 'koa'
 import helloString from './helloworldString'
 
 const app = new Koa()
+const port = 3000
 
 // logger
 
@@ -26,4 +27,5 @@ app.use(async ctx => {
   ctx.body = helloString
 })
 
-app.listen(3000)
+console.log(`app is now listen on port: ${port}`)
+app.listen(port)
