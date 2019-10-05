@@ -21,10 +21,18 @@ async function validateQueryString(ctx, next) {
 }
 
 router.get('/shorturl', validateQueryString, ctx => {
+  const parsedUrl = querystring.parse(ctx.querystring)
+  const urlForShorten = parsedUrl.url
+
+  if (!parsedUrl.url) {
+    ctx.throw(400, 'querystring url is required')
+    return
+  }
+
   ctx.set('Content-Type', 'application/javascript')
   ctx.body = JSON.stringify({
     data: {
-      shortUrl: 'shorturl',
+      shortUrl: `${urlForShorten} aloha`,
     },
   })
 })

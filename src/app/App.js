@@ -1,5 +1,20 @@
 import React, { useState } from 'react'
+import axios from 'axios'
 import UrlResult from './UrlResult'
+
+async function getShortentUrl(url) {
+  try {
+    const { data } = await axios.get('/shorturl', {
+      params: {
+        url,
+      },
+    })
+
+    return data.data.shortUrl
+  } catch (error) {
+    console.error('error', error.message)
+  }
+}
 
 export default function App() {
   const [urlForShorten, setUrlForShorten] = useState('')
@@ -11,11 +26,19 @@ export default function App() {
     setUrlForShorten(event.target.value)
   }
 
-  function handleOnSubmit(event) {
+  async function handleOnSubmit(event) {
     event.preventDefault()
+    if (!urlForShorten) {
+      alert('please insert url')
+      return
+    }
 
-    alert(urlForShorten)
+    const shortUrl = await getShortentUrl(urlForShorten)
+
+    if (!shortUrl) return
+
     setUrlForShorten('')
+    setUrlResult(shortUrl)
   }
 
   return (

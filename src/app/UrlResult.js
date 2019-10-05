@@ -5,7 +5,7 @@ export default function UrlResult({ urlResult }) {
 
   return [
     <div key="output" className="output">
-      {urlResult}
+      your shorten url: {urlResult}
     </div>,
     <br key="space" />,
   ]
