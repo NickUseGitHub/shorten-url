@@ -29,7 +29,6 @@ router.get('/shorturl', validateQueryString, ctx => {
 app.use(async function redirectToShortenUrl(ctx, next) {
   const reqUrl = ctx.url
 
-  console.log('reqUrl', reqUrl)
   const isShortUrl = reqUrl === '/heyitshorten'
   if (isShortUrl === true) {
     ctx.redirect('https://www.google.com')
