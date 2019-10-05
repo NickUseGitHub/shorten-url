@@ -9,11 +9,15 @@
   "author": "Chaiwat Tungtongsoontorn <nickt.tnick@gmail.com>",
   "license": "ISC",
   "dependencies": {
+    "@babel/plugin-transform-react-jsx": "^7.3.0",
     "koa": "^2.8.2",
-    "koa-router": "^7.4.0"
+    "koa-router": "^7.4.0",
+    "react": "^16.10.2",
+    "react-dom": "^16.10.2"
   },
   "devDependencies": {
     "@babel/core": "^7.6.2",
+    "@babel/plugin-transform-runtime": "^7.6.2",
     "@babel/preset-env": "^7.6.2",
     "@babel/register": "^7.6.2",
     "babel-eslint": "^10.0.3",
