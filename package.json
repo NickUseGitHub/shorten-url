@@ -9,7 +9,8 @@
   "author": "Chaiwat Tungtongsoontorn <nickt.tnick@gmail.com>",
   "license": "ISC",
   "dependencies": {
-    "koa": "^2.8.2"
+    "koa": "^2.8.2",
+    "koa-router": "^7.4.0"
   },
   "devDependencies": {
     "@babel/core": "^7.6.2",

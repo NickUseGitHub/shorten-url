@@ -1,31 +1,43 @@
 import Koa from 'koa'
-import helloString from './helloworldString'
+import Router from 'koa-router'
+import querystring from 'querystring'
 
 const app = new Koa()
 const port = 3000
 
-// logger
+const router = new Router()
 
-app.use(async (ctx, next) => {
+async function validateQueryString(ctx, next) {
+  const parsedUrl = querystring.parse(ctx.querystring)
+
+  if (!parsedUrl.url) {
+    ctx.throw(400, 'querystring url is required')
+    return
+  }
+  next()
+}
+
+router.get('/shorturl', validateQueryString, ctx => {
+  ctx.set('Content-Type', 'application/javascript')
+  ctx.body = JSON.stringify({
+    data: {
+      shortUrl: 'shorturl',
+    },
+  })
+})
+
+app.use(async function redirectToShortenUrl(ctx, next) {
+  const reqUrl = ctx.url
+
+  const isShortUrl = reqUrl === '/heyitshorten'
+  if (isShortUrl === true) {
+    ctx.redirect('https://www.google.com')
+    return
+  }
+
   await next()
-  const rt = ctx.response.get('X-Response-Time')
-  console.log(`${ctx.method} ${ctx.url} - ${rt}`)
 })
-
-// x-response-time
-
-app.use(async (ctx, next) => {
-  const start = Date.now()
-  await next()
-  const ms = Date.now() - start
-  ctx.set('X-Response-Time', `${ms}ms`)
-})
-
-// response
-
-app.use(async ctx => {
-  ctx.body = helloString
-})
+app.use(router.routes()).use(router.allowedMethods())
 
 console.log(`app is now listen on port: ${port}`)
 app.listen(port)
