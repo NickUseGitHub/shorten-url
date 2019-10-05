@@ -1,9 +1,27 @@
-import React, { useEffect } from 'react'
+import React, { useState } from 'react'
 
 export default function App() {
-  useEffect(function() {
-    alert('Hello world')
-  }, [])
+  const [urlForShorten, setUrlForShorten] = useState('')
 
-  return <div>Hello wolrd Najaaaaa</div>
+  function handleOnChange(event) {
+    event.preventDefault()
+
+    setUrlForShorten(event.target.value)
+  }
+
+  function handleOnSubmit(event) {
+    event.preventDefault()
+
+    alert(urlForShorten)
+    setUrlForShorten('')
+  }
+
+  return (
+    <div>
+      <div className="output"></div>
+      <form onSubmit={handleOnSubmit}>
+        <input type="text" value={urlForShorten} onChange={handleOnChange} />
+      </form>
+    </div>
+  )
 }
