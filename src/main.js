@@ -1,5 +1,7 @@
 import Koa from 'koa'
 import Router from 'koa-router'
+import mount from 'koa-mount'
+import serve from 'koa-static'
 import querystring from 'querystring'
 import appHandler from './server'
 
@@ -29,6 +31,7 @@ router.get('/shorturl', validateQueryString, ctx => {
 
 router.get('(.*)', appHandler)
 
+app.use(mount('/static', serve(__dirname + '/static')))
 app.use(async function redirectToShortenUrl(ctx, next) {
   const reqUrl = ctx.url
 

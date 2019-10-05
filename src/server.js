@@ -8,6 +8,7 @@ function readerAppToString() {
 
 export default async function appHandler(ctx) {
   const appBody = await readerAppToString()
+  const appBundleScriptUrl = 'http://localhost:3000/static/app.bundle.js'
 
   ctx.body = `
   <html>
@@ -15,9 +16,11 @@ export default async function appHandler(ctx) {
       <title>Universal App</title>
     </head>
     <body>
-      <div id="container">
+      <div id="root">
         ${appBody}
-      <div>
+      </div>
+
+      <script type="text/javascript" src="${appBundleScriptUrl}"></script>
     </body>
   </html>
   `
