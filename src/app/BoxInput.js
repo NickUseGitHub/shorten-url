@@ -42,9 +42,30 @@ function BoxInput({ className, setUrlResult }) {
 
   return (
     <form className={className} onSubmit={handleOnSubmit}>
-      <input type="text" value={urlForShorten} onChange={handleOnChange} />
+      <span>Insert your url here</span>{' '}
+      <input
+        type="text"
+        value={urlForShorten}
+        placeholder="e.g. www.yourwebsite.com"
+        onChange={handleOnChange}
+      />
     </form>
   )
 }
 
-export default styled(BoxInput)``
+export default styled(BoxInput)`
+  width: 90%;
+  font-size: 1.5em;
+
+  span {
+  }
+
+  input {
+    height: 50px;
+    width: 60%;
+    padding: 5px;
+
+    border: radius: 5%;
+    border: 2px solid black;
+  }
+`
