@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon --ignore src/client.js ./src",
+    "dev-client-bundle": "nodemon --exec 'yarn build-client-bundle' --watch ./src/app",
     "build-client-bundle": "webpack --config webpack.client.config.js"
   },
   "author": "Chaiwat Tungtongsoontorn <nickt.tnick@gmail.com>",
