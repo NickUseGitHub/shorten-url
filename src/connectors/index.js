@@ -4,7 +4,8 @@ import configs from '../configs'
 
 export default function initialConnectors() {
   const redisPort = configs.redisPort
-  const redisClient = redis.createClient(redisPort)
+  const redisHost = configs.redisHost
+  const redisClient = redis.createClient(redisPort, redisHost)
 
   redisClient.on('error', function(err) {
     console.log('Redis Error ' + err)

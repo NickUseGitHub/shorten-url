@@ -4,5 +4,16 @@ services:
     image: redis:5.0.6
     expose:
       - 6379
+
+  nodeapp:
+    build:
+      context: .
+    expose:
+      - 3000
+    depends_on:
+      - redis
+    links:
+      - redis
     ports:
-      - 6379:6379
+      - 3000:3000
+    command: ['yarn', 'start']
