@@ -4,6 +4,7 @@
   "description": "shorten your url",
   "main": "index.js",
   "scripts": {
+    "start": "babel-node ./src/main.js",
     "dev": "nodemon --ignore src/client.js ./src",
     "dev-client-bundle": "nodemon --exec 'yarn build-client-bundle' --watch ./src/app",
     "build-client-bundle": "webpack --config webpack.client.config.js"
@@ -11,6 +12,8 @@
   "author": "Chaiwat Tungtongsoontorn <nickt.tnick@gmail.com>",
   "license": "ISC",
   "dependencies": {
+    "@babel/core": "^7.6.2",
+    "@babel/node": "^7.6.2",
     "@babel/plugin-transform-react-jsx": "^7.3.0",
     "axios": "^0.19.0",
     "koa": "^2.8.2",
@@ -23,12 +26,12 @@
     "styled-components": "^4.4.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.6.2",
     "@babel/plugin-transform-runtime": "^7.6.2",
     "@babel/preset-env": "^7.6.2",
     "@babel/register": "^7.6.2",
     "babel-eslint": "^10.0.3",
     "babel-loader": "^8.0.6",
+    "dotenv": "^8.1.0",
     "eslint": "^6.5.1",
     "eslint-config-prettier": "^6.3.0",
     "eslint-plugin-prettier": "^3.1.1",
