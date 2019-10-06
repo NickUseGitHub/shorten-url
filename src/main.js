@@ -6,12 +6,12 @@ import querystring from 'querystring'
 
 import { getUniqId, isUrlValid } from './utils'
 import appHandler from './server'
-import initialConnect from './connectors'
+import initialConnectors from './connectors'
 
 const app = new Koa()
 const port = 3000
 
-app.context.connectors = initialConnect()
+app.context.connectors = initialConnectors()
 
 const router = new Router()
 
@@ -48,7 +48,7 @@ router.get('/shorturl', validateQueryString, async function(ctx) {
   })
 })
 
-router.get('(.*)', appHandler)
+router.get('/', appHandler)
 
 app.use(mount('/static', serve(__dirname + '/static')))
 app.use(async function redirectToShortenUrl(ctx, next) {
@@ -67,6 +67,39 @@ app.use(async function redirectToShortenUrl(ctx, next) {
 
   await next()
 })
+app.use(async function denyRequestFromBandedIp(ctx, next) {
+  try {
+    const key = ctx.ip
+    const numberOfReq = await ctx.connectors.redisDB.getValue(key)
+    const maxRequestForBand = 10
+
+    if (numberOfReq >= maxRequestForBand) {
+      const httpErrMsg = 403
+      ctx.status = httpErrMsg
+      ctx.throw(httpErrMsg)
+      return
+    }
+
+    await next()
+  } catch (err) {
+    console.log('err', err.message)
+  }
+})
+app.use(async function bandIpFromRadomRequestUrl(ctx, next) {
+  try {
+    await next()
+    const status = ctx.status
+    if (status === 404) {
+      const key = ctx.ip
+      ctx.connectors.redisDB.increaseKey(key)
+      ctx.throw(404)
+    }
+  } catch (err) {
+    ctx.status = err.status || 500
+    console.log('err', err.message)
+  }
+})
+
 app.use(router.routes()).use(router.allowedMethods())
 
 console.log(`app is now listen on port: ${port}`)

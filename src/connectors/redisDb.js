@@ -29,4 +29,15 @@ export default class RedisDb {
       })
     })
   }
+
+  async increaseKey(key) {
+    const valueFromRedis = await this.getValue(key)
+
+    if (valueFromRedis) {
+      this.client.incr(key)
+    } else {
+      const expireTime = 5 * 60
+      this.setValue(key, 1, expireTime)
+    }
+  }
 }
