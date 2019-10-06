@@ -52,6 +52,11 @@ router.get('(.*)', appHandler)
 
 app.use(mount('/static', serve(__dirname + '/static')))
 app.use(async function redirectToShortenUrl(ctx, next) {
+  if (!ctx.url) {
+    await next()
+    return
+  }
+
   const reqUrl = ctx.url.split('/').join('')
   const valueFromRedis = await ctx.connectors.redisDB.getValue(reqUrl)
 
