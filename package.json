@@ -2,6 +2,9 @@
   "name": "shorten-url",
   "version": "1.0.0",
   "description": "shorten your url",
+  "repository": {
+    "url": "https://github.com/NickUseGitHub/shorten-url"
+  },
   "main": "index.js",
   "scripts": {
     "start": "babel-node ./src/main.js",
