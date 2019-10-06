@@ -5,13 +5,14 @@ import mount from 'koa-mount'
 import serve from 'koa-static'
 import querystring from 'querystring'
 
-import { getUniqId, isUrlValid } from './utils'
+import getUniqId from './utils/getUniqId'
 import appHandler from './server'
 import initialConnectors from './connectors'
 import {
   redirectToShortenUrl,
   denyRequestFromBandedIp,
   increaseTryFromRandomRequestUrl,
+  validateQueryString,
 } from './middlewares'
 
 dotenv.config()
@@ -22,24 +23,6 @@ const port = 3000
 app.context.connectors = initialConnectors()
 
 const router = new Router()
-
-async function validateQueryString(ctx, next) {
-  const parsedUrl = querystring.parse(ctx.querystring)
-
-  if (!parsedUrl.url) {
-    ctx.throw(400, 'querystring url is required')
-    return
-  }
-
-  const urlForShorten = parsedUrl.url
-
-  if (!isUrlValid(urlForShorten)) {
-    ctx.throw(400, 'querystring url is invalid')
-    return
-  }
-
-  await next()
-}
 
 router.get('/shorturl', validateQueryString, async function(ctx) {
   const uniqId = getUniqId()
