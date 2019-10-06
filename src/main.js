@@ -4,6 +4,7 @@ import Router from 'koa-router'
 import mount from 'koa-mount'
 import serve from 'koa-static'
 import querystring from 'querystring'
+dotenv.config()
 
 import getUniqId from './utils/getUniqId'
 import appHandler from './server'
@@ -14,11 +15,10 @@ import {
   increaseTryFromRandomRequestUrl,
   validateQueryString,
 } from './middlewares'
-
-dotenv.config()
+import configs from './configs'
 
 const app = new Koa()
-const port = 3000
+const port = configs.port
 
 app.context.connectors = initialConnectors()
 
@@ -30,7 +30,9 @@ router.get('/shorturl', validateQueryString, async function(ctx) {
   const parsedUrl = querystring.parse(ctx.querystring)
   const urlForShorten = parsedUrl.url
   ctx.connectors.redisDB.setValue(uniqId, urlForShorten)
-  const shortenUrl = `http://localhost:3000/${uniqId}`
+
+  const portStr = String(configs.port) === '80' ? '' : `:${configs.port}`
+  const shortenUrl = `${configs.protocal}://${configs.baseUrl}${portStr}/${uniqId}`
 
   ctx.body = JSON.stringify({
     data: {
