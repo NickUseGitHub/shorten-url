@@ -6,12 +6,12 @@ import querystring from 'querystring'
 
 import { getUniqId, isUrlValid } from './utils'
 import appHandler from './server'
-import initialConnect from './connectors'
+import initialConnectors from './connectors'
 
 const app = new Koa()
 const port = 3000
 
-app.context.connectors = initialConnect()
+app.context.connectors = initialConnectors()
 
 const router = new Router()
 

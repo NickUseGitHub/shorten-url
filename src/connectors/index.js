@@ -1,7 +1,7 @@
 import redis from 'redis'
 import RedisDb from './redisDb'
 
-export default function initialConnect() {
+export default function initialConnectors() {
   const redisClient = redis.createClient()
 
   redisClient.on('error', function(err) {
