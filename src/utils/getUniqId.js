@@ -1,7 +1,9 @@
 import crypto from 'crypto'
 
-export default function getUniqId(lenByte) {
-  if (isNaN(lenByte) && lenByte > 0) {
+const defaultLenByte = 3
+
+export default function getUniqId(lenByte = defaultLenByte) {
+  if (isNaN(lenByte)) {
     throw new Error(
       `function getUniqId: required argument lenByte as number but get ${lenByte}`,
     )
