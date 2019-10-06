@@ -7,6 +7,11 @@ import querystring from 'querystring'
 import { getUniqId, isUrlValid } from './utils'
 import appHandler from './server'
 import initialConnectors from './connectors'
+import {
+  redirectToShortenUrl,
+  denyRequestFromBandedIp,
+  increaseTryFromRandomRequestUrl,
+} from './middlewares'
 
 const app = new Koa()
 const port = 3000
@@ -51,54 +56,9 @@ router.get('/shorturl', validateQueryString, async function(ctx) {
 router.get('/', appHandler)
 
 app.use(mount('/static', serve(__dirname + '/static')))
-app.use(async function redirectToShortenUrl(ctx, next) {
-  if (!ctx.url) {
-    await next()
-    return
-  }
-
-  const reqUrl = ctx.url.split('/').join('')
-  const valueFromRedis = await ctx.connectors.redisDB.getValue(reqUrl)
-
-  if (valueFromRedis) {
-    ctx.redirect(valueFromRedis)
-    return
-  }
-
-  await next()
-})
-app.use(async function denyRequestFromBandedIp(ctx, next) {
-  try {
-    const key = ctx.ip
-    const numberOfReq = await ctx.connectors.redisDB.getValue(key)
-    const maxRequestForBand = 10
-
-    if (numberOfReq >= maxRequestForBand) {
-      const httpErrMsg = 403
-      ctx.status = httpErrMsg
-      ctx.throw(httpErrMsg)
-      return
-    }
-
-    await next()
-  } catch (err) {
-    console.log('err', err.message)
-  }
-})
-app.use(async function bandIpFromRadomRequestUrl(ctx, next) {
-  try {
-    await next()
-    const status = ctx.status
-    if (status === 404) {
-      const key = ctx.ip
-      ctx.connectors.redisDB.increaseKey(key)
-      ctx.throw(404)
-    }
-  } catch (err) {
-    ctx.status = err.status || 500
-    console.log('err', err.message)
-  }
-})
+app.use(redirectToShortenUrl)
+app.use(denyRequestFromBandedIp)
+app.use(increaseTryFromRandomRequestUrl)
 
 app.use(router.routes()).use(router.allowedMethods())
 
