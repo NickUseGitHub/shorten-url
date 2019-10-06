@@ -3,10 +3,14 @@ import Router from 'koa-router'
 import mount from 'koa-mount'
 import serve from 'koa-static'
 import querystring from 'querystring'
+
 import appHandler from './server'
+import initialConnect from './connectors'
 
 const app = new Koa()
 const port = 3000
+
+app.context.connectors = initialConnect()
 
 const router = new Router()
 
