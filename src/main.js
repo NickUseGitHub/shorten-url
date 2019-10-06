@@ -73,7 +73,6 @@ app.use(async function denyRequestFromBandedIp(ctx, next) {
     const numberOfReq = await ctx.connectors.redisDB.getValue(key)
     const maxRequestForBand = 10
 
-    console.log('numberOfReq', numberOfReq)
     if (numberOfReq >= maxRequestForBand) {
       const httpErrMsg = 403
       ctx.status = httpErrMsg
