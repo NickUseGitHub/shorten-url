@@ -67,6 +67,21 @@ app.use(async function redirectToShortenUrl(ctx, next) {
 
   await next()
 })
+app.use(async function bandIpFromRadomRequestUrl(ctx, next) {
+  try {
+    await next()
+    const status = ctx.status
+    if (status === 404) {
+      const key = ctx.ip
+      ctx.connectors.redisDB.increaseKey(key)
+      ctx.throw(404)
+    }
+  } catch (err) {
+    ctx.status = err.status || 500
+    console.log('err', err.message)
+  }
+})
+
 app.use(router.routes()).use(router.allowedMethods())
 
 console.log(`app is now listen on port: ${port}`)
