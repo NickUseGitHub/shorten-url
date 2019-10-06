@@ -1,8 +1,10 @@
 import redis from 'redis'
 import RedisDb from './redisDb'
+import configs from '../configs'
 
 export default function initialConnectors() {
-  const redisClient = redis.createClient()
+  const redisPort = configs.redisPort
+  const redisClient = redis.createClient(redisPort)
 
   redisClient.on('error', function(err) {
     console.log('Redis Error ' + err)
@@ -13,7 +15,7 @@ export default function initialConnectors() {
       console.log('Redis connection Error' + err)
     }
 
-    console.log('Redis is now connected on ported 6379')
+    console.log(`Redis is now connected on ported ${redisPort}`)
   })
 
   return {
