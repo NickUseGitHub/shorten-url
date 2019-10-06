@@ -48,7 +48,7 @@ router.get('/shorturl', validateQueryString, async function(ctx) {
   })
 })
 
-router.get('(.*)', appHandler)
+router.get('/', appHandler)
 
 app.use(mount('/static', serve(__dirname + '/static')))
 app.use(async function redirectToShortenUrl(ctx, next) {
