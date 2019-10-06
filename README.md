@@ -10,24 +10,10 @@ This repository is for example code to any given url request to shortent url. Th
 
 ## How to develop this project
 
-- Start your Docker and run up Redis container by using this command
+- Start your application in local by this command
 
 ```
 docker-compose up
-```
-
-- Start your web application by these commands
-
-```
-yarn dev
-yarn dev-client-bundle
-```
-
-or
-
-```
-npm run dev
-npm run dev-client-bundle
 ```
 
 ## ENV configs
