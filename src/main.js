@@ -1,3 +1,4 @@
+import dotenv from 'dotenv'
 import Koa from 'koa'
 import Router from 'koa-router'
 import mount from 'koa-mount'
@@ -12,6 +13,8 @@ import {
   denyRequestFromBandedIp,
   increaseTryFromRandomRequestUrl,
 } from './middlewares'
+
+dotenv.config()
 
 const app = new Koa()
 const port = 3000
