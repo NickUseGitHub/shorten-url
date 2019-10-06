@@ -52,11 +52,11 @@ router.get('(.*)', appHandler)
 
 app.use(mount('/static', serve(__dirname + '/static')))
 app.use(async function redirectToShortenUrl(ctx, next) {
-  const reqUrl = ctx.url
+  const reqUrl = ctx.url.split('/').join('')
+  const valueFromRedis = await ctx.connectors.redisDB.getValue(reqUrl)
 
-  const isShortUrl = reqUrl === '/heyitshorten'
-  if (isShortUrl === true) {
-    ctx.redirect('https://www.google.com')
+  if (valueFromRedis) {
+    ctx.redirect(valueFromRedis)
     return
   }
 
